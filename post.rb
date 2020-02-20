@@ -24,8 +24,16 @@ class Post
   def file_path
 
     current_path = File.dirname __FILE__
-    file_name = @created_at.strftime "#{self.class.name}_%Y-%m-%d_%H-%M-%s.txt"
+    file_name = @created_at.strftime "#{self.class.name}_%Y-%m-%d_%H-%M-%S.txt"
     return current_path + '/' + file_name
+  end
+
+  def self.post_types
+    [Memo, Link, Task]
+  end
+
+  def self.create type_index
+    return post_types[type_index].new
   end
 
 end
