@@ -23,9 +23,25 @@ class Task < Post
     puts "Чта надо сделать?"
     @text = STDIN.gets.chomp
 
-    puts "К какому числу нужно сделать? (dd.mm.yyyy.)"
+    puts "К какому числу нужно сделать? (dd.mm.yyyy)"
     input = STDIN.gets.chomp
-    @due_date = Date.parse input
+    @due_date = Date.parse(input).strftime("%d-%m-%Y %H:%M:%S")
 
+  end
+
+  def to_db_hash
+    return super.merge(
+        {
+            'text' => @text,
+            'due_date' => @due_date
+        }
+    )
+
+  end
+
+  def load_data data_hash
+    super data_hash
+    @text = data_hash['text']
+    @due_date = Date.parse data_hash['due_date']
   end
 end

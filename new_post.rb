@@ -3,9 +3,9 @@ require_relative 'link'
 require_relative 'memo'
 require_relative 'task'
 
-puts "ПриветЁ я блокнот, что хочешь записать?"
+puts "ПриветЁ я блокнот (SQLite version), что хочешь записать?"
 
-choices = Post.post_types
+choices = Post.post_types.keys
 
 choice = -1
 
@@ -19,10 +19,10 @@ until choice >= 0 && choice < choices.size
 
 end
 
-entry = Post.create choice
+entry = Post.create choices[choice]
 
 entry.read_from_console
 
-entry.save
+id = entry.save_to_db
 
-puts "\nУра, запись сохранена!"
+puts "\nУра, запись сохранена! ID number #{id}"
